@@ -6,6 +6,8 @@
 
 > 一款优雅的 AI 创作工具，让创意触手可及
 
+📖 [English Version](./README_EN.md)
+
 ✨ **MiniMax Creator** 是一款基于 MiniMax API 的智能创作平台，支持文生图、文生视频、音乐生成三大核心功能。简洁现代的界面，让你专注于创作本身。
 
 ## 功能特点
