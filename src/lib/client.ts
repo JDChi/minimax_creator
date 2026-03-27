@@ -12,7 +12,8 @@ function getConfig() {
 
 async function apiPost<T>(
   endpoint: string,
-  params: Record<string, unknown>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params: any,
   signal?: AbortSignal
 ): Promise<T> {
   const { baseUrl, apiKey } = getConfig();
