@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { generateVideo } from '@/lib/client';
 import { VideoGenResponse } from '@/types/minimax';
+import { useI18n } from '@/lib/i18n';
 
 export default function VideoGenForm() {
+  const { t } = useI18n();
   const [prompt, setPrompt] = useState('');
   const [duration, setDuration] = useState(6);
   const [resolution, setResolution] = useState('768P');
@@ -17,7 +19,7 @@ export default function VideoGenForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!prompt.trim()) {
-      setError('请输入描述');
+      setError(t.pleaseEnterPrompt);
       return;
     }
 
@@ -51,7 +53,7 @@ export default function VideoGenForm() {
 
     const poll = async () => {
       if (attempts >= maxAttempts) {
-        setStatus('超时，请稍后重试');
+        setStatus(t.error);
         return;
       }
 
@@ -73,7 +75,7 @@ export default function VideoGenForm() {
           return;
         } else if (data.status === 'failed') {
           setStatus('failed');
-          setError('视频生成失败');
+          setError(t.error);
           return;
         }
 
@@ -99,7 +101,7 @@ export default function VideoGenForm() {
           </svg>
         </div>
         <div>
-          <h2 className="text-xl font-bold text-slate-800 dark:text-white">文生视频</h2>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">{t.textToVideo}</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">Text to Video</p>
         </div>
       </div>
@@ -112,13 +114,13 @@ export default function VideoGenForm() {
               <svg className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
-              描述
+              {t.videoPrompt}
             </span>
           </label>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="描述你想要生成的视频... 支持 [运镜指令] 如 [推进], [拉远]"
+            placeholder={t.videoPromptPlaceholder}
             rows={4}
             className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 placeholder-slate-400 dark:placeholder-slate-500 text-slate-800 dark:text-white text-sm resize-none transition-all duration-200 input-focus"
           />
@@ -133,7 +135,7 @@ export default function VideoGenForm() {
                 <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                时长
+                {t.duration}
               </span>
             </label>
             <select
@@ -141,8 +143,8 @@ export default function VideoGenForm() {
               onChange={(e) => setDuration(Number(e.target.value))}
               className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 text-slate-800 dark:text-white text-sm cursor-pointer transition-all duration-200 input-focus"
             >
-              <option value={6}>6 秒</option>
-              <option value={10}>10 秒</option>
+              <option value={6}>6 {t.duration.includes('秒') ? '' : 's'}</option>
+              <option value={10}>10 {t.duration.includes('秒') ? '' : 's'}</option>
             </select>
           </div>
 
@@ -153,7 +155,7 @@ export default function VideoGenForm() {
                 <svg className="w-4 h-4 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                分辨率
+                {t.resolution}
               </span>
             </label>
             <select
@@ -178,14 +180,14 @@ export default function VideoGenForm() {
           {loading ? (
             <>
               <div className="spinner w-5 h-5"></div>
-              <span>提交中...</span>
+              <span>{t.generatingVideo}</span>
             </>
           ) : (
             <>
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
-              <span>生成视频</span>
+              <span>{t.generateVideo}</span>
             </>
           )}
         </button>
@@ -211,7 +213,7 @@ export default function VideoGenForm() {
               <div className="w-5 h-5 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
             <div className="flex-1">
-              <p className="text-sm text-purple-700 dark:text-purple-300 font-medium">生成中...</p>
+              <p className="text-sm text-purple-700 dark:text-purple-300 font-medium">{t.videoStatus}</p>
               {taskId && (
                 <p className="text-xs text-purple-500 dark:text-purple-400 mt-0.5 font-mono truncate">
                   Task ID: {taskId}
@@ -229,7 +231,7 @@ export default function VideoGenForm() {
             <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            生成结果
+            {t.videoUrl}
           </h3>
           <div className="relative overflow-hidden rounded-xl bg-slate-100 dark:bg-zinc-800">
             <video

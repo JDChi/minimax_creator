@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { generateImage } from '@/lib/client';
 import { ImageGenResponse } from '@/types/minimax';
+import { useI18n } from '@/lib/i18n';
 
 export default function ImageGenForm() {
+  const { t } = useI18n();
   const [prompt, setPrompt] = useState('');
   const [aspectRatio, setAspectRatio] = useState('1:1');
   const [n, setN] = useState(1);
@@ -15,7 +17,7 @@ export default function ImageGenForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!prompt.trim()) {
-      setError('请输入描述');
+      setError(t.pleaseEnterPrompt);
       return;
     }
 
@@ -49,7 +51,7 @@ export default function ImageGenForm() {
           </svg>
         </div>
         <div>
-          <h2 className="text-xl font-bold text-slate-800 dark:text-white">文生图</h2>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">{t.textToImage}</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">Text to Image</p>
         </div>
       </div>
@@ -62,13 +64,13 @@ export default function ImageGenForm() {
               <svg className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
-              描述
+              {t.imagePrompt}
             </span>
           </label>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="描述你想要生成的图片..."
+            placeholder={t.imagePromptPlaceholder}
             rows={4}
             className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 placeholder-slate-400 dark:placeholder-slate-500 text-slate-800 dark:text-white text-sm resize-none transition-all duration-200 input-focus"
           />
@@ -83,7 +85,7 @@ export default function ImageGenForm() {
                 <svg className="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                 </svg>
-                宽高比
+                {t.aspectRatio}
               </span>
             </label>
             <select
@@ -106,7 +108,7 @@ export default function ImageGenForm() {
                 <svg className="w-4 h-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
-                数量
+                {t.imageCount}
               </span>
             </label>
             <select
@@ -130,14 +132,14 @@ export default function ImageGenForm() {
           {loading ? (
             <>
               <div className="spinner w-5 h-5"></div>
-              <span>生成中...</span>
+              <span>{t.generating}</span>
             </>
           ) : (
             <>
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              <span>生成图片</span>
+              <span>{t.generateImage}</span>
             </>
           )}
         </button>
@@ -162,7 +164,7 @@ export default function ImageGenForm() {
             <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            生成结果
+            {t.imageUrl}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {result.data.image_urls.map((url, index) => (

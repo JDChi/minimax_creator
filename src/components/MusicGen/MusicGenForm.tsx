@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { generateMusic } from '@/lib/client';
 import { MusicGenResponse } from '@/types/minimax';
+import { useI18n } from '@/lib/i18n';
 
 export default function MusicGenForm() {
+  const { t } = useI18n();
   const [prompt, setPrompt] = useState('');
   const [lyrics, setLyrics] = useState('');
   const [isInstrumental, setIsInstrumental] = useState(false);
@@ -15,7 +17,7 @@ export default function MusicGenForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!prompt.trim() && !isInstrumental) {
-      setError('请输入音乐描述或选择纯音乐');
+      setError(t.pleaseEnterPrompt);
       return;
     }
 
@@ -49,7 +51,7 @@ export default function MusicGenForm() {
           </svg>
         </div>
         <div>
-          <h2 className="text-xl font-bold text-slate-800 dark:text-white">生音乐</h2>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">{t.textToMusic}</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">Text to Music</p>
         </div>
       </div>
@@ -62,13 +64,13 @@ export default function MusicGenForm() {
               <svg className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
-              音乐描述
+              {t.musicPrompt}
             </span>
           </label>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="描述音乐风格、情绪和场景，如：独立民谣, 忧郁, 适合在下雨的晚上"
+            placeholder={t.musicPromptPlaceholder}
             rows={3}
             className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500 placeholder-slate-400 dark:placeholder-slate-500 text-slate-800 dark:text-white text-sm resize-none transition-all duration-200 input-focus"
           />
@@ -88,7 +90,7 @@ export default function MusicGenForm() {
               <div className="w-11 h-6 bg-slate-200 dark:bg-zinc-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-pink-500/50 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-pink-500 peer-checked:to-amber-500 transition-all duration-200"></div>
             </div>
             <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors">
-              纯音乐（无人声）
+              {t.musicType}
             </span>
           </label>
         </div>
@@ -101,13 +103,13 @@ export default function MusicGenForm() {
                 <svg className="w-4 h-4 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                歌词（可选）
+                {t.lyrics}
               </span>
             </label>
             <textarea
               value={lyrics}
               onChange={(e) => setLyrics(e.target.value)}
-              placeholder="输入歌词，使用 \n 分隔每行。支持结构标签：[Verse], [Chorus], [Bridge] 等"
+              placeholder={t.lyricsPlaceholder}
               rows={6}
               className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500 placeholder-slate-400 dark:placeholder-slate-500 text-slate-800 dark:text-white text-sm resize-none transition-all duration-200 input-focus font-mono text-xs"
             />
@@ -124,14 +126,14 @@ export default function MusicGenForm() {
           {loading ? (
             <>
               <div className="spinner w-5 h-5"></div>
-              <span>生成中...</span>
+              <span>{t.generatingMusic}</span>
             </>
           ) : (
             <>
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
               </svg>
-              <span>生成音乐</span>
+              <span>{t.generateMusic}</span>
             </>
           )}
         </button>
@@ -156,7 +158,7 @@ export default function MusicGenForm() {
             <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            生成结果
+            {t.musicUrl}
           </h3>
           <div className="p-4 bg-gradient-to-r from-pink-50 to-amber-50 dark:from-pink-900/20 dark:to-amber-900/20 border border-pink-200 dark:border-pink-800/50 rounded-xl">
             {result.extra_info && (
@@ -164,7 +166,7 @@ export default function MusicGenForm() {
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                时长: {Math.round((result.extra_info.music_duration || 0) / 1000)}秒
+                {t.duration}: {Math.round((result.extra_info.music_duration || 0) / 1000)}s
               </p>
             )}
             <p className="text-xs text-slate-500 dark:text-slate-400 font-mono break-all">

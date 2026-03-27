@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useI18n } from '@/lib/i18n';
 
 export default function SettingsForm() {
+  const { t } = useI18n();
   const [apiKey, setApiKey] = useState('');
   const [baseUrl, setBaseUrl] = useState('https://api.minimaxi.com');
   const [saved, setSaved] = useState(false);
@@ -31,8 +33,8 @@ export default function SettingsForm() {
           </svg>
         </div>
         <div>
-          <h2 className="text-xl font-bold text-slate-800 dark:text-white">API 配置</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400">Configuration</p>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">{t.apiConfig}</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{t.configuration}</p>
         </div>
       </div>
 
@@ -44,7 +46,7 @@ export default function SettingsForm() {
               <svg className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
               </svg>
-              API Key
+              {t.apiKey}
             </span>
           </label>
           <div className="relative">
@@ -52,7 +54,7 @@ export default function SettingsForm() {
               type={showKey ? 'text' : 'password'}
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              placeholder="输入 MiniMax API Key"
+              placeholder={t.apiKey}
               className="w-full px-4 py-3 pr-12 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 placeholder-slate-400 dark:placeholder-slate-500 text-slate-800 dark:text-white text-sm transition-all duration-200 input-focus"
             />
             <button
@@ -79,9 +81,9 @@ export default function SettingsForm() {
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
             <span className="flex items-center gap-1.5">
               <svg className="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0 3-4.03 3-9s-1.343-9-3-9m-9 9a9 9 0 019-9" />
               </svg>
-              Base URL
+              {t.baseUrl}
             </span>
           </label>
           <input
@@ -101,7 +103,7 @@ export default function SettingsForm() {
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          <span>保存配置</span>
+          <span>{t.saveConfig}</span>
         </button>
 
         {/* Success Message */}
@@ -111,7 +113,7 @@ export default function SettingsForm() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              配置已保存
+              {t.configSaved}
             </p>
           </div>
         )}
@@ -119,16 +121,15 @@ export default function SettingsForm() {
         {/* Help Text */}
         <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-xl">
           <p className="text-xs text-amber-700 dark:text-amber-400 leading-relaxed">
-            <span className="font-medium">安全提示：</span>
-            API Key 存储在浏览器本地（localStorage）。这意味着：
+            <span className="font-medium">{t.securityNotice}</span>
           </p>
           <ul className="text-xs text-amber-600 dark:text-amber-500 mt-2 ml-4 list-disc list-inside space-y-1">
-            <li>清除浏览器数据会导致 API Key 丢失</li>
-            <li>在公共电脑上使用时，请注意安全风险</li>
-            <li>如有疑虑，请定期在 MiniMax 平台检查用量</li>
+            <li>{t.securityTip1}</li>
+            <li>{t.securityTip2}</li>
+            <li>{t.securityTip3}</li>
           </ul>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
-            获取 API Key：{' '}
+            {t.getApiKey}{' '}
             <a
               href="https://platform.minimaxi.com"
               target="_blank"
@@ -143,7 +144,7 @@ export default function SettingsForm() {
         {/* Disclaimer */}
         <div className="mt-4 p-4 bg-slate-100 dark:bg-zinc-800/50 rounded-xl text-center">
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            本项目仅供学习研究使用，请勿用于商业目的。
+            {t.disclaimer}
           </p>
         </div>
       </div>

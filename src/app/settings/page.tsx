@@ -1,6 +1,11 @@
+'use client';
+
 import SettingsForm from '@/components/Settings/SettingsForm';
+import { useI18n } from '@/lib/i18n';
 
 export default function SettingsPage() {
+  const { t } = useI18n();
+
   return (
     <main className="min-h-screen py-8 px-4">
       {/* Header */}
@@ -15,7 +20,7 @@ export default function SettingsPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </a>
-          <h1 className="text-2xl font-bold gradient-text">设置</h1>
+          <h1 className="text-2xl font-bold gradient-text">{t.settings}</h1>
         </div>
       </header>
 
