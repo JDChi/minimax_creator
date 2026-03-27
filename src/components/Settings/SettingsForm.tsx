@@ -117,10 +117,18 @@ export default function SettingsForm() {
         )}
 
         {/* Help Text */}
-        <div className="mt-6 p-4 bg-slate-50 dark:bg-zinc-800/50 rounded-xl">
-          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            <span className="font-medium text-slate-600 dark:text-slate-300">提示：</span>
-            API Key 将安全存储在浏览器本地，不会发送到任何服务器。请访问{' '}
+        <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-xl">
+          <p className="text-xs text-amber-700 dark:text-amber-400 leading-relaxed">
+            <span className="font-medium">安全提示：</span>
+            API Key 存储在浏览器本地（localStorage）。这意味着：
+          </p>
+          <ul className="text-xs text-amber-600 dark:text-amber-500 mt-2 ml-4 list-disc list-inside space-y-1">
+            <li>清除浏览器数据会导致 API Key 丢失</li>
+            <li>在公共电脑上使用时，请注意安全风险</li>
+            <li>如有疑虑，请定期在 MiniMax 平台检查用量</li>
+          </ul>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
+            获取 API Key：{' '}
             <a
               href="https://platform.minimaxi.com"
               target="_blank"
@@ -128,8 +136,14 @@ export default function SettingsForm() {
               className="text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 underline"
             >
               MiniMax Platform
-            </a>{' '}
-              获取您的 API Key。
+            </a>
+          </p>
+        </div>
+
+        {/* Disclaimer */}
+        <div className="mt-4 p-4 bg-slate-100 dark:bg-zinc-800/50 rounded-xl text-center">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            本项目仅供学习研究使用，请勿用于商业目的。
           </p>
         </div>
       </div>
