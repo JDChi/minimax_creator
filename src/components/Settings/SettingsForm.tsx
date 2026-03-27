@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 
 export default function SettingsForm() {
   const [apiKey, setApiKey] = useState('');
-  const [baseUrl, setBaseUrl] = useState('https://api.minimax.com');
+  const [baseUrl, setBaseUrl] = useState('https://api.minimaxi.com');
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     setApiKey(localStorage.getItem('minimax_api_key') || '');
-    setBaseUrl(localStorage.getItem('minimax_base_url') || 'https://api.minimax.com');
+    setBaseUrl(localStorage.getItem('minimax_base_url') || 'https://api.minimaxi.com');
   }, []);
 
   const handleSave = () => {
@@ -33,7 +33,7 @@ export default function SettingsForm() {
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
             placeholder="输入 MiniMax API Key"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-black"
           />
         </div>
 
@@ -45,8 +45,8 @@ export default function SettingsForm() {
             type="text"
             value={baseUrl}
             onChange={(e) => setBaseUrl(e.target.value)}
-            placeholder="https://api.minimax.com"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="https://api.minimaxi.com"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-black"
           />
         </div>
 

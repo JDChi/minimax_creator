@@ -14,7 +14,10 @@ export default function ImageGenForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!prompt.trim()) return;
+    if (!prompt.trim()) {
+      setError('请输入描述');
+      return;
+    }
 
     setLoading(true);
     setError('');
@@ -22,6 +25,7 @@ export default function ImageGenForm() {
 
     try {
       const data = await generateImage({
+        model: 'image-01',
         prompt,
         aspect_ratio: aspectRatio as '1:1' | '16:9' | '4:3' | '3:2' | '2:3' | '3:4' | '9:16' | '21:9',
         n,
@@ -49,7 +53,7 @@ export default function ImageGenForm() {
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="描述你想要生成的图片..."
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-black"
           />
         </div>
 
@@ -89,7 +93,7 @@ export default function ImageGenForm() {
 
         <button
           type="submit"
-          disabled={loading || !prompt.trim()}
+          disabled={loading}
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
         >
           {loading ? '生成中...' : '生成图片'}

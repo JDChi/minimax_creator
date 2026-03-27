@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     }
 
     const apiKey = request.headers.get('x-minimax-api-key');
-    const baseUrl = request.headers.get('x-minimax-base-url') || 'https://api.minimax.com';
+    const baseUrl = request.headers.get('x-minimax-base-url') || 'https://api.minimaxi.com';
 
     if (!apiKey) {
       return NextResponse.json(
@@ -30,7 +30,17 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const data: VideoStatusResponse = await response.json();
+    const text = await response.text();
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch {
+      return NextResponse.json(
+        { base_resp: { status_code: 500, status_msg: `响应解析失败: ${text.slice(0, 200)}` } },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(data, { status: response.status });
   } catch (error) {

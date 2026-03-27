@@ -1,6 +1,6 @@
 import { ImageGenParams, VideoGenParams, MusicGenParams } from '@/types/minimax';
 
-const DEFAULT_BASE_URL = 'https://api.minimax.com';
+const DEFAULT_BASE_URL = 'https://api.minimaxi.com';
 
 function getConfig() {
   if (typeof window === 'undefined') {

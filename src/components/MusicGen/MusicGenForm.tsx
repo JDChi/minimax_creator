@@ -14,7 +14,10 @@ export default function MusicGenForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!prompt.trim() && !isInstrumental) return;
+    if (!prompt.trim() && !isInstrumental) {
+      setError('请输入音乐描述或选择纯音乐');
+      return;
+    }
 
     setLoading(true);
     setError('');
@@ -22,6 +25,7 @@ export default function MusicGenForm() {
 
     try {
       const data = await generateMusic({
+        model: 'music-2.5+',
         prompt,
         lyrics: isInstrumental ? undefined : lyrics,
         is_instrumental: isInstrumental,
@@ -49,7 +53,7 @@ export default function MusicGenForm() {
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="描述音乐风格、情绪和场景，如：独立民谣, 忧郁, 适合在下雨的晚上"
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-black"
           />
         </div>
 
@@ -76,14 +80,14 @@ export default function MusicGenForm() {
               onChange={(e) => setLyrics(e.target.value)}
               placeholder="输入歌词，使用 \n 分隔每行。支持结构标签：[Verse], [Chorus], [Bridge] 等"
               rows={6}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-black"
             />
           </div>
         )}
 
         <button
           type="submit"
-          disabled={loading || (!prompt.trim() && !isInstrumental)}
+          disabled={loading}
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
         >
           {loading ? '生成中...' : '生成音乐'}

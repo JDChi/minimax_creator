@@ -2,10 +2,10 @@ import { ImageGenParams, VideoGenParams, MusicGenParams } from '@/types/minimax'
 
 function getConfig() {
   if (typeof window === 'undefined') {
-    return { baseUrl: 'https://api.minimax.com' };
+    return { baseUrl: 'https://api.minimaxi.com' };
   }
   return {
-    baseUrl: localStorage.getItem('minimax_base_url') || 'https://api.minimax.com',
+    baseUrl: localStorage.getItem('minimax_base_url') || 'https://api.minimaxi.com',
     apiKey: localStorage.getItem('minimax_api_key'),
   };
 }
@@ -32,7 +32,18 @@ async function apiPost<T>(
     signal,
   });
 
-  const data = await response.json();
+  const text = await response.text();
+
+  if (!text) {
+    throw new Error(`请求失败: 空响应 (${response.status})`);
+  }
+
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(`响应解析失败: ${text.slice(0, 200)}`);
+  }
 
   if (!response.ok || data.base_resp?.status_code !== 0) {
     throw new Error(data.base_resp?.status_msg || `请求失败: ${response.status}`);

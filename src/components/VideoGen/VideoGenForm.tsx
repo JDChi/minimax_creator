@@ -16,7 +16,10 @@ export default function VideoGenForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!prompt.trim()) return;
+    if (!prompt.trim()) {
+      setError('请输入描述');
+      return;
+    }
 
     setLoading(true);
     setError('');
@@ -26,6 +29,7 @@ export default function VideoGenForm() {
 
     try {
       const data = await generateVideo({
+        model: 'MiniMax-Hailuo-2.3',
         prompt,
         duration: duration as 6 | 10,
         resolution: resolution as '720P' | '768P' | '1080P',
@@ -54,13 +58,21 @@ export default function VideoGenForm() {
       }
 
       try {
-        const response = await fetch(`/api/minimax/video/status?task_id=${id}`);
-        const data: VideoStatusResponse = await response.json();
+        const apiKey = localStorage.getItem('minimax_api_key');
+        const baseUrl = localStorage.getItem('minimax_base_url') || 'https://api.minimaxi.com';
+
+        const response = await fetch(`/api/minimax/video/status?task_id=${id}`, {
+          headers: {
+            'x-minimax-api-key': apiKey || '',
+            'x-minimax-base-url': baseUrl,
+          },
+        });
+        const data = await response.json();
+        console.log('Video status:', data);
 
         if (data.status === 'success') {
           setStatus('success');
-          // 实际应从响应中获取视频 URL
-          setVideoUrl(data.file_id ? `https://your-video-url.com/${data.file_id}` : null);
+          setVideoUrl(data.video_url || data.file_id || null);
           return;
         } else if (data.status === 'failed') {
           setStatus('failed');
@@ -71,7 +83,8 @@ export default function VideoGenForm() {
         setStatus('processing');
         attempts++;
         setTimeout(poll, 5000);
-      } catch {
+      } catch (err) {
+        console.error('Poll error:', err);
         attempts++;
         setTimeout(poll, 5000);
       }
@@ -94,7 +107,7 @@ export default function VideoGenForm() {
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="描述你想要生成的视频... 支持 [运镜指令] 如 [推进], [拉远]"
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-black"
           />
         </div>
 
@@ -131,7 +144,7 @@ export default function VideoGenForm() {
 
         <button
           type="submit"
-          disabled={loading || !prompt.trim()}
+          disabled={loading}
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
         >
           {loading ? '提交中...' : '生成视频'}
