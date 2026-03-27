@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { generateVideo } from '@/lib/client';
-import { VideoGenResponse, VideoStatusResponse } from '@/types/minimax';
+import { VideoGenResponse } from '@/types/minimax';
 
 export default function VideoGenForm() {
   const [prompt, setPrompt] = useState('');
@@ -46,8 +46,6 @@ export default function VideoGenForm() {
   };
 
   const pollVideoStatus = async (id: string) => {
-    // 简化版：直接使用返回的 task_id，实际应轮询查询状态
-    // 视频生成是异步的，需要定时查询状态
     const maxAttempts = 60;
     let attempts = 0;
 
@@ -68,7 +66,6 @@ export default function VideoGenForm() {
           },
         });
         const data = await response.json();
-        console.log('Video status:', data);
 
         if (data.status === 'success') {
           setStatus('success');
@@ -84,7 +81,6 @@ export default function VideoGenForm() {
         attempts++;
         setTimeout(poll, 5000);
       } catch (err) {
-        console.error('Poll error:', err);
         attempts++;
         setTimeout(poll, 5000);
       }
@@ -94,46 +90,76 @@ export default function VideoGenForm() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">文生视频</h2>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-zinc-800/50 shadow-xl p-6 sm:p-8 card-hover">
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/30">
+          <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            描述
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">文生视频</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Text to Video</p>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Prompt Input */}
+        <div>
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+            <span className="flex items-center gap-1.5">
+              <svg className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+              描述
+            </span>
           </label>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="描述你想要生成的视频... 支持 [运镜指令] 如 [推进], [拉远]"
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-black"
+            className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 placeholder-slate-400 dark:placeholder-slate-500 text-slate-800 dark:text-white text-sm resize-none transition-all duration-200 input-focus"
           />
         </div>
 
-        <div className="flex gap-4">
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              时长
+        {/* Options Row */}
+        <div className="grid grid-cols-2 gap-4">
+          {/* Duration */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                时长
+              </span>
             </label>
             <select
               value={duration}
               onChange={(e) => setDuration(Number(e.target.value))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 text-slate-800 dark:text-white text-sm cursor-pointer transition-all duration-200 input-focus"
             >
               <option value={6}>6 秒</option>
               <option value={10}>10 秒</option>
             </select>
           </div>
 
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              分辨率
+          {/* Resolution */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                分辨率
+              </span>
             </label>
             <select
               value={resolution}
               onChange={(e) => setResolution(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 text-slate-800 dark:text-white text-sm cursor-pointer transition-all duration-200 input-focus"
             >
               <option value="720P">720P</option>
               <option value="768P">768P</option>
@@ -142,38 +168,76 @@ export default function VideoGenForm() {
           </div>
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+          className="w-full btn-primary text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-purple-500/30 disabled:shadow-none disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2"
+          style={{ background: 'linear-gradient(135deg, #9333ea, #ec4899)' }}
         >
-          {loading ? '提交中...' : '生成视频'}
+          {loading ? (
+            <>
+              <div className="spinner w-5 h-5"></div>
+              <span>提交中...</span>
+            </>
+          ) : (
+            <>
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              <span>生成视频</span>
+            </>
+          )}
         </button>
       </form>
 
+      {/* Error Message */}
       {error && (
-        <p className="mt-4 text-red-600 text-sm">{error}</p>
-      )}
-
-      {status && (
-        <div className="mt-4">
-          <p className="text-sm text-gray-600">
-            状态: {status === 'processing' ? '生成中...' : status}
+        <div className="mt-5 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-xl animate-fade-in">
+          <p className="text-sm text-red-600 dark:text-red-400 flex items-center gap-2">
+            <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {error}
           </p>
-          {taskId && (
-            <p className="text-xs text-gray-400 mt-1">Task ID: {taskId}</p>
-          )}
         </div>
       )}
 
+      {/* Status */}
+      {status && status !== 'success' && status !== 'failed' && (
+        <div className="mt-5 p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800/50 rounded-xl animate-fade-in">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-5 h-5 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-purple-700 dark:text-purple-300 font-medium">生成中...</p>
+              {taskId && (
+                <p className="text-xs text-purple-500 dark:text-purple-400 mt-0.5 font-mono truncate">
+                  Task ID: {taskId}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Video Result */}
       {videoUrl && (
-        <div className="mt-6">
-          <h3 className="text-sm font-medium text-gray-700 mb-2">生成结果：</h3>
-          <video
-            src={videoUrl}
-            controls
-            className="w-full rounded-md"
-          />
+        <div className="mt-8 animate-fade-in">
+          <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
+            <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            生成结果
+          </h3>
+          <div className="relative overflow-hidden rounded-xl bg-slate-100 dark:bg-zinc-800">
+            <video
+              src={videoUrl}
+              controls
+              className="w-full result-image"
+            />
+          </div>
         </div>
       )}
     </div>
