@@ -102,7 +102,6 @@ export default function VideoGenForm() {
         </div>
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white">{t.textToVideo}</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400">Text to Video</p>
         </div>
       </div>
 

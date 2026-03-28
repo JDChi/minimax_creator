@@ -52,7 +52,6 @@ export default function MusicGenForm() {
         </div>
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white">{t.textToMusic}</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400">Text to Music</p>
         </div>
       </div>
 

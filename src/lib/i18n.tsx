@@ -18,7 +18,6 @@ interface Translations {
   poweredBy: string;
   // Settings page
   apiConfig: string;
-  configuration: string;
   appearance: string;
   theme: string;
   themeLight: string;
@@ -88,7 +87,6 @@ const translations: Record<Language, Translations> = {
     poweredBy: 'Powered by MiniMax AI',
     // Settings page
     apiConfig: 'API 配置',
-    configuration: 'Configuration',
     appearance: '外观',
     theme: '主题',
     themeLight: '浅色',
@@ -156,7 +154,6 @@ const translations: Record<Language, Translations> = {
     poweredBy: 'Powered by MiniMax AI',
     // Settings page
     apiConfig: 'API Configuration',
-    configuration: 'Configuration',
     appearance: 'Appearance',
     theme: 'Theme',
     themeLight: 'Light',

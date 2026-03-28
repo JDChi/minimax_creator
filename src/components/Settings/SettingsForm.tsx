@@ -35,7 +35,6 @@ export default function SettingsForm() {
         </div>
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white">{t.apiConfig}</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400">{t.configuration}</p>
         </div>
       </div>
 
