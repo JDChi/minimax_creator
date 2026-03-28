@@ -1,5 +1,22 @@
 import { ImageGenParams, VideoGenParams, MusicGenParams, SpeechGenParams } from '@/types/minimax';
 
+export interface VoiceInfo {
+  voice_id: string;
+  voice_name?: string;
+  description?: string[];
+  created_time?: string;
+}
+
+export interface GetVoicesResponse {
+  system_voice?: VoiceInfo[];
+  voice_cloning?: VoiceInfo[];
+  voice_generation?: VoiceInfo[];
+  base_resp: {
+    status_code: number;
+    status_msg: string;
+  };
+}
+
 function getConfig() {
   if (typeof window === 'undefined') {
     return { baseUrl: 'https://api.minimaxi.com' };
@@ -71,4 +88,42 @@ export async function generateMusic(params: MusicGenParams, signal?: AbortSignal
 // 语音合成
 export async function generateSpeech(params: SpeechGenParams, signal?: AbortSignal) {
   return apiPost('/api/minimax/speech', params, signal);
+}
+
+// 获取音色列表
+export async function getVoices(): Promise<GetVoicesResponse> {
+  const { baseUrl, apiKey } = getConfig();
+
+  if (!apiKey) {
+    throw new Error('API Key 未配置，请在设置页面配置');
+  }
+
+  const response = await fetch('/api/minimax/voices', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-minimax-api-key': apiKey,
+      'x-minimax-base-url': baseUrl,
+    },
+    body: JSON.stringify({ voice_type: 'all' }),
+  });
+
+  const text = await response.text();
+
+  if (!text) {
+    throw new Error(`请求失败: 空响应 (${response.status})`);
+  }
+
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(`响应解析失败: ${text.slice(0, 200)}`);
+  }
+
+  if (!response.ok || data.base_resp?.status_code !== 0) {
+    throw new Error(data.base_resp?.status_msg || `请求失败: ${response.status}`);
+  }
+
+  return data;
 }

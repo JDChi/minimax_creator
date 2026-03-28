@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { generateSpeech } from '@/lib/client';
+import { useState, useEffect } from 'react';
+import { generateSpeech, getVoices, type VoiceInfo } from '@/lib/client';
 import { SpeechGenResponse } from '@/types/minimax';
 import { useI18n } from '@/lib/i18n';
 
@@ -18,6 +18,31 @@ export default function SpeechGenForm() {
   const [loading, setLoading] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [error, setError] = useState('');
+  const [voices, setVoices] = useState<VoiceInfo[]>([]);
+  const [voicesLoading, setVoicesLoading] = useState(true);
+  const [voicesError, setVoicesError] = useState('');
+
+  useEffect(() => {
+    async function fetchVoices() {
+      try {
+        const data = await getVoices();
+        const allVoices = [
+          ...(data.system_voice || []),
+          ...(data.voice_cloning || []),
+          ...(data.voice_generation || []),
+        ];
+        setVoices(allVoices);
+        if (allVoices.length > 0 && !allVoices.find(v => v.voice_id === voiceId)) {
+          setVoiceId(allVoices[0].voice_id);
+        }
+      } catch (err) {
+        setVoicesError(String(err));
+      } finally {
+        setVoicesLoading(false);
+      }
+    }
+    fetchVoices();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,16 +157,20 @@ export default function SpeechGenForm() {
             <select
               value={voiceId}
               onChange={(e) => setVoiceId(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 text-slate-800 dark:text-white text-sm cursor-pointer transition-all duration-200 input-focus"
+              disabled={voicesLoading}
+              className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 text-slate-800 dark:text-white text-sm cursor-pointer transition-all duration-200 input-focus disabled:opacity-50"
             >
-              <option value="male-qn-qingse">male-qn-qingse (青涩青年)</option>
-              <option value="female-shaonv">female-shaonv (少女)</option>
-              <option value="female-shaonv-excited">female-shaonv-excited (活泼少女)</option>
-              <option value="male-boli">male-boli (博士)</option>
-              <option value="male-yifu">male-yifu (御姐)</option>
-              <option value="male-wenrou">male-wenrou (温柔男声)</option>
-              <option value="female-tianhong">female-tianhong (甜美女声)</option>
-              <option value="male-zhuge">male-zhuge (主播)</option>
+              {voicesLoading ? (
+                <option value="">加载中...</option>
+              ) : voicesError ? (
+                <option value="">加载失败</option>
+              ) : (
+                voices.map((voice) => (
+                  <option key={voice.voice_id} value={voice.voice_id}>
+                    {voice.voice_id}{voice.voice_name ? ` (${voice.voice_name})` : ''}
+                  </option>
+                ))
+              )}
             </select>
           </div>
         </div>

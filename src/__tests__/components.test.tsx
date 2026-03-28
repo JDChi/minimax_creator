@@ -18,6 +18,15 @@ Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 vi.mock('../lib/client', () => ({
   generateImage: vi.fn(),
   generateSpeech: vi.fn(),
+  getVoices: vi.fn().mockResolvedValue({
+    system_voice: [
+      { voice_id: 'male-qn-qingse', voice_name: '青涩青年' },
+      { voice_id: 'female-shaonv', voice_name: '少女' },
+    ],
+    voice_cloning: [],
+    voice_generation: [],
+    base_resp: { status_code: 0, status_msg: 'success' },
+  }),
 }));
 
 // Wrapper component to provide I18nContext
