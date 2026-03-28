@@ -19,6 +19,11 @@ interface Translations {
   // Settings page
   apiConfig: string;
   configuration: string;
+  appearance: string;
+  theme: string;
+  themeLight: string;
+  themeDark: string;
+  themeSystem: string;
   apiKey: string;
   baseUrl: string;
   saveConfig: string;
@@ -84,6 +89,11 @@ const translations: Record<Language, Translations> = {
     // Settings page
     apiConfig: 'API 配置',
     configuration: 'Configuration',
+    appearance: '外观',
+    theme: '主题',
+    themeLight: '浅色',
+    themeDark: '深色',
+    themeSystem: '跟随系统',
     apiKey: 'API Key',
     baseUrl: 'Base URL',
     saveConfig: '保存配置',
@@ -147,6 +157,11 @@ const translations: Record<Language, Translations> = {
     // Settings page
     apiConfig: 'API Configuration',
     configuration: 'Configuration',
+    appearance: 'Appearance',
+    theme: 'Theme',
+    themeLight: 'Light',
+    themeDark: 'Dark',
+    themeSystem: 'System',
     apiKey: 'API Key',
     baseUrl: 'Base URL',
     saveConfig: 'Save Configuration',

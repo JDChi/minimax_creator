@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useI18n } from '@/lib/i18n';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 export default function SettingsForm() {
   const { t } = useI18n();
@@ -39,6 +40,21 @@ export default function SettingsForm() {
       </div>
 
       <div className="space-y-5">
+        {/* Appearance */}
+        <div className="p-4 bg-slate-50 dark:bg-zinc-800/50 rounded-xl">
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+            <span className="flex items-center gap-1.5">
+              <svg className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+              </svg>
+              {t.appearance}
+            </span>
+          </label>
+          <div className="flex items-center justify-center py-2">
+            <ThemeSwitcher />
+          </div>
+        </div>
+
         {/* API Key */}
         <div>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
