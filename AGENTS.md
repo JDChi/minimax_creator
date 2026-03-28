@@ -49,3 +49,16 @@ src/
 - `npm run dev` - Start development server
 - `npm run test:run` - Run tests once
 - `npm run test` - Run tests in watch mode
+
+## 查询 MiniMax API 文档流程
+
+当需要查看 MiniMax API 文档时，按以下步骤：
+
+1. **搜索文档入口** - 使用 `mcp__MiniMax__web_search` 搜索关键词
+2. **获取页面内容** - 使用 `mcp__ddg-search__fetch_content` 抓取具体页面
+3. **文档索引地址** - `https://platform.minimaxi.com/docs/llms.txt`
+4. **参考实现** - 可参考 MiniMax-MCP 仓库: https://github.com/MiniMax-Software/MiniMax-MCP
+
+**可用工具：**
+- `WebSearch` / `mcp__MiniMax__web_search` - 搜索
+- `WebFetch` / `mcp__ddg-search__fetch_content` - 获取页面内容
