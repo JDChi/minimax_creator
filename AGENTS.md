@@ -54,11 +54,16 @@ src/
 
 当需要查看 MiniMax API 文档时，按以下步骤：
 
-1. **搜索文档入口** - 使用 `mcp__MiniMax__web_search` 搜索关键词
-2. **获取页面内容** - 使用 `mcp__ddg-search__fetch_content` 抓取具体页面
-3. **文档索引地址** - `https://platform.minimaxi.com/docs/llms.txt`
-4. **参考实现** - 可参考 MiniMax-MCP 仓库: https://github.com/MiniMax-Software/MiniMax-MCP
+1. **访问文档页面** - 用 `web_fetch` 访问 `https://platform.minimaxi.com/docs/guides/models-intro`
+2. **查找索引链接** - 页面顶部有 "Documentation Index" 部分，包含 `llms.txt` 链接
+3. **抓取全站索引** - 访问 `https://platform.minimaxi.com/docs/llms.txt` 获取完整文档索引
+4. **搜索关键词** - 在索引中搜索 "语音"、"音色"、"视频" 等关键词
+5. **抓取具体页面** - 根据索引中的链接抓取目标页面
+
+**llms.txt 协议**：这是现代文档网站给 AI 助手指路的索引文件，方便快速掌握整站地图。
 
 **可用工具：**
-- `WebSearch` / `mcp__MiniMax__web_search` - 搜索
 - `WebFetch` / `mcp__ddg-search__fetch_content` - 获取页面内容
+- `WebSearch` / `mcp__MiniMax__web_search` - 搜索
+
+**参考实现** - MiniMax-MCP 仓库: https://github.com/MiniMax-Software/MiniMax-MCP
