@@ -79,13 +79,24 @@ interface Translations {
   // Speech Gen
   speechPrompt: string;
   speechPromptPlaceholder: string;
+  speechTextLimit: string;
   speechModel: string;
   voiceId: string;
   speechSpeed: string;
   speechVolume: string;
   speechPitch: string;
   speechEmotion: string;
+  speechEmotionHappy: string;
+  speechEmotionSad: string;
+  speechEmotionAngry: string;
+  speechEmotionFearful: string;
+  speechEmotionDisgusted: string;
+  speechEmotionSurprised: string;
+  speechEmotionNeutral: string;
+  speechEmotionHint: string;
   speechOutputFormat: string;
+  speechSubtitle: string;
+  speechSubtitleHint: string;
   generateSpeech: string;
   // Common
   error: string;
@@ -169,13 +180,24 @@ const translations: Record<Language, Translations> = {
     // Speech Gen
     speechPrompt: '文本内容',
     speechPromptPlaceholder: '输入要转换为语音的文本...',
+    speechTextLimit: '最多 10000 字符',
     speechModel: '模型',
     voiceId: '音色',
     speechSpeed: '语速',
     speechVolume: '音量',
     speechPitch: '音调',
     speechEmotion: '情绪',
+    speechEmotionHappy: '开心',
+    speechEmotionSad: '悲伤',
+    speechEmotionAngry: '生气',
+    speechEmotionFearful: '害怕',
+    speechEmotionDisgusted: '厌恶',
+    speechEmotionSurprised: '惊讶',
+    speechEmotionNeutral: '中性',
+    speechEmotionHint: '仅 speech-2.8-hd/turbo 支持语气词标签如(laughs)',
     speechOutputFormat: '输出格式',
+    speechSubtitle: '启用字幕',
+    speechSubtitleHint: '仅部分模型支持',
     generateSpeech: '生成语音',
     // Common
     error: '错误',
@@ -257,13 +279,24 @@ const translations: Record<Language, Translations> = {
     // Speech Gen
     speechPrompt: 'Text',
     speechPromptPlaceholder: 'Enter text to convert to speech...',
+    speechTextLimit: 'Max 10000 characters',
     speechModel: 'Model',
     voiceId: 'Voice',
     speechSpeed: 'Speed',
     speechVolume: 'Volume',
     speechPitch: 'Pitch',
     speechEmotion: 'Emotion',
+    speechEmotionHappy: 'Happy',
+    speechEmotionSad: 'Sad',
+    speechEmotionAngry: 'Angry',
+    speechEmotionFearful: 'Fearful',
+    speechEmotionDisgusted: 'Disgusted',
+    speechEmotionSurprised: 'Surprised',
+    speechEmotionNeutral: 'Neutral',
+    speechEmotionHint: 'Only speech-2.8-hd/turbo support emotion tags like (laughs)',
     speechOutputFormat: 'Format',
+    speechSubtitle: 'Enable Subtitle',
+    speechSubtitleHint: 'Only supported by some models',
     generateSpeech: 'Generate Speech',
     // Common
     error: 'Error',

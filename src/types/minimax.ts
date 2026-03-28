@@ -111,6 +111,7 @@ export interface SpeechGenParams {
     format?: 'mp3' | 'pcm' | 'flac' | 'wav';
     channel?: 1 | 2;
   };
+  subtitle_enable?: boolean;
   output_format?: 'url' | 'hex';
 }
 

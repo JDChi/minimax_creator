@@ -15,6 +15,7 @@ export default function SpeechGenForm() {
   const [pitch, setPitch] = useState(0);
   const [emotion, setEmotion] = useState('happy');
   const [format, setFormat] = useState('mp3');
+  const [subtitleEnable, setSubtitleEnable] = useState(false);
   const [loading, setLoading] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [error, setError] = useState('');
@@ -69,6 +70,7 @@ export default function SpeechGenForm() {
         audio_setting: {
           format: format as 'mp3' | 'pcm' | 'flac' | 'wav',
         },
+        subtitle_enable: subtitleEnable,
         output_format: 'url',
       }) as SpeechGenResponse;
 
@@ -114,6 +116,7 @@ export default function SpeechGenForm() {
             rows={4}
             className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 placeholder-slate-400 dark:placeholder-slate-500 text-slate-800 dark:text-white text-sm resize-none transition-all duration-200 input-focus"
           />
+          <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">{t.speechTextLimit}</p>
         </div>
 
         {/* Model + Voice Selection */}
@@ -256,14 +259,15 @@ export default function SpeechGenForm() {
             onChange={(e) => setEmotion(e.target.value)}
             className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 text-slate-800 dark:text-white text-sm cursor-pointer transition-all duration-200 input-focus"
           >
-            <option value="happy">happy</option>
-            <option value="sad">sad</option>
-            <option value="angry">angry</option>
-            <option value="fearful">fearful</option>
-            <option value="disgusted">disgusted</option>
-            <option value="surprised">surprised</option>
-            <option value="neutral">neutral</option>
+            <option value="happy">{t.speechEmotionHappy} (happy)</option>
+            <option value="sad">{t.speechEmotionSad} (sad)</option>
+            <option value="angry">{t.speechEmotionAngry} (angry)</option>
+            <option value="fearful">{t.speechEmotionFearful} (fearful)</option>
+            <option value="disgusted">{t.speechEmotionDisgusted} (disgusted)</option>
+            <option value="surprised">{t.speechEmotionSurprised} (surprised)</option>
+            <option value="neutral">{t.speechEmotionNeutral} (neutral)</option>
           </select>
+          <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">{t.speechEmotionHint}</p>
         </div>
 
         {/* Output Format */}
@@ -286,6 +290,27 @@ export default function SpeechGenForm() {
             <option value="flac">flac</option>
             <option value="wav">wav</option>
           </select>
+        </div>
+
+        {/* Subtitle Toggle */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{t.speechSubtitle}</span>
+            <span className="text-xs text-slate-400 dark:text-slate-500">({t.speechSubtitleHint})</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setSubtitleEnable(!subtitleEnable)}
+            className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${
+              subtitleEnable ? 'bg-cyan-500' : 'bg-slate-300 dark:bg-zinc-600'
+            }`}
+          >
+            <span
+              className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 ${
+                subtitleEnable ? 'translate-x-6' : ''
+              }`}
+            />
+          </button>
         </div>
 
         {/* Submit Button */}
