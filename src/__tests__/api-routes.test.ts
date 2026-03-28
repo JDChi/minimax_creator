@@ -112,6 +112,55 @@ describe('API Response Structures', () => {
     });
   });
 
+  describe('Speech Generation Response', () => {
+    it('should have correct structure for successful response', () => {
+      const mockResponse = {
+        data: {
+          audio: 'hex_encoded_audio_or_url',
+          subtitle_file: 'https://example.com/subtitle.json',
+          status: 2,
+          trace_id: '01b8bf9bb7433cc75c18eee6cfa8fe21',
+          extra_info: {
+            audio_length: 9900,
+            audio_sample_rate: 32000,
+            audio_size: 160323,
+            bitrate: 128000,
+            audio_format: 'mp3',
+            audio_channel: 1,
+            usage_characters: 26,
+            word_count: 52,
+          },
+        },
+        base_resp: {
+          status_code: 0,
+          status_msg: 'success',
+        },
+      };
+
+      expect(mockResponse.data.audio).toBeDefined();
+      expect(mockResponse.data.status).toBe(2);
+      expect(mockResponse.data.trace_id).toBeDefined();
+      expect(mockResponse.data.extra_info.audio_length).toBe(9900);
+      expect(mockResponse.base_resp.status_code).toBe(0);
+    });
+
+    it('should handle streaming response status', () => {
+      const mockResponse = {
+        data: {
+          audio: 'hex_chunk',
+          status: 1,
+          trace_id: '01b8bf9bb7433cc75c18eee6cfa8fe21',
+        },
+        base_resp: {
+          status_code: 0,
+          status_msg: '',
+        },
+      };
+
+      expect(mockResponse.data.status).toBe(1);
+    });
+  });
+
   describe('Error Responses', () => {
     it('should handle API key missing error', () => {
       const mockError = {

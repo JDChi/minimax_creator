@@ -3,6 +3,7 @@ import type {
   ImageGenParams,
   VideoGenParams,
   MusicGenParams,
+  SpeechGenParams,
 } from '../types/minimax';
 
 describe('MiniMax Types', () => {
@@ -112,6 +113,83 @@ describe('MiniMax Types', () => {
 
       expect(params.lyrics).toContain('[verse]');
       expect(params.lyrics).toContain('[chorus]');
+    });
+  });
+
+  describe('SpeechGenParams', () => {
+    it('should accept valid speech generation params', () => {
+      const params: SpeechGenParams = {
+        model: 'speech-2.8-hd',
+        text: 'Hello world',
+        voice_setting: {
+          voice_id: 'male-qn-qingse',
+          speed: 1,
+          vol: 1,
+          pitch: 0,
+          emotion: 'happy',
+        },
+        audio_setting: {
+          format: 'mp3',
+        },
+        output_format: 'url',
+      };
+
+      expect(params.model).toBe('speech-2.8-hd');
+      expect(params.text).toBe('Hello world');
+      expect(params.voice_setting.voice_id).toBe('male-qn-qingse');
+      expect(params.voice_setting.emotion).toBe('happy');
+    });
+
+    it('should validate model enum values', () => {
+      const validModels: SpeechGenParams['model'][] = [
+        'speech-2.8-hd',
+        'speech-2.8-turbo',
+        'speech-2.6-hd',
+        'speech-2.6-turbo',
+        'speech-02-hd',
+        'speech-02-turbo',
+        'speech-01-hd',
+        'speech-01-turbo',
+      ];
+
+      validModels.forEach(model => {
+        const params: SpeechGenParams = {
+          model,
+          text: 'test',
+          voice_setting: { voice_id: 'male-qn-qingse' },
+        };
+        expect(params.model).toBe(model);
+      });
+    });
+
+    it('should validate emotion enum values', () => {
+      const validEmotions = ['happy', 'sad', 'angry', 'fearful', 'disgusted', 'surprised', 'neutral'] as const;
+
+      validEmotions.forEach(emotion => {
+        const params: SpeechGenParams = {
+          model: 'speech-2.8-hd',
+          text: 'test',
+          voice_setting: {
+            voice_id: 'male-qn-qingse',
+            emotion,
+          },
+        };
+        expect(params.voice_setting.emotion).toBe(emotion);
+      });
+    });
+
+    it('should validate audio format enum values', () => {
+      const validFormats: SpeechGenParams['audio_setting']['format'][] = ['mp3', 'pcm', 'flac', 'wav'];
+
+      validFormats.forEach(format => {
+        const params: SpeechGenParams = {
+          model: 'speech-2.8-hd',
+          text: 'test',
+          voice_setting: { voice_id: 'male-qn-qingse' },
+          audio_setting: { format },
+        };
+        expect(params.audio_setting?.format).toBe(format);
+      });
     });
   });
 });
