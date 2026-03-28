@@ -10,6 +10,7 @@ export default function VideoGenForm() {
   const [prompt, setPrompt] = useState('');
   const [duration, setDuration] = useState(6);
   const [resolution, setResolution] = useState('768P');
+  const [model, setModel] = useState<'MiniMax-Hailuo-2.3' | 'MiniMax-Hailuo-2.3-Fast' | 'MiniMax-Hailuo-02'>('MiniMax-Hailuo-2.3');
   const [loading, setLoading] = useState(false);
   const [taskId, setTaskId] = useState<string | null>(null);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -31,7 +32,7 @@ export default function VideoGenForm() {
 
     try {
       const data = await generateVideo({
-        model: 'MiniMax-Hailuo-2.3',
+        model,
         prompt,
         duration: duration as 6 | 10,
         resolution: resolution as '720P' | '768P' | '1080P',
@@ -127,6 +128,27 @@ export default function VideoGenForm() {
 
         {/* Options Row */}
         <div className="grid grid-cols-2 gap-4">
+          {/* Model */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                </svg>
+                {t.videoModel}
+              </span>
+            </label>
+            <select
+              value={model}
+              onChange={(e) => setModel(e.target.value as 'MiniMax-Hailuo-2.3' | 'MiniMax-Hailuo-2.3-Fast' | 'MiniMax-Hailuo-02')}
+              className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 text-slate-800 dark:text-white text-sm cursor-pointer transition-all duration-200 input-focus"
+            >
+              <option value="MiniMax-Hailuo-2.3">MiniMax Hailuo 2.3</option>
+              <option value="MiniMax-Hailuo-2.3-Fast">MiniMax Hailuo 2.3 Fast</option>
+              <option value="MiniMax-Hailuo-02">MiniMax Hailuo 02</option>
+            </select>
+          </div>
+
           {/* Duration */}
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">

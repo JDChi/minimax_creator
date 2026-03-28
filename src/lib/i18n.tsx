@@ -37,6 +37,7 @@ interface Translations {
   // Image Gen
   imagePrompt: string;
   imagePromptPlaceholder: string;
+  model: string;
   aspectRatio: string;
   imageCount: string;
   generateImage: string;
@@ -50,6 +51,7 @@ interface Translations {
   videoPromptPlaceholder: string;
   resolution: string;
   duration: string;
+  videoModel: string;
   cameraMovement: string;
   generateVideo: string;
   generatingVideo: string;
@@ -60,6 +62,7 @@ interface Translations {
   musicPrompt: string;
   musicPromptPlaceholder: string;
   instrumental: string;
+  musicModel: string;
   lyrics: string;
   lyricsPlaceholder: string;
   generateMusic: string;
@@ -106,6 +109,7 @@ const translations: Record<Language, Translations> = {
     // Image Gen
     imagePrompt: '图片描述',
     imagePromptPlaceholder: '描述你想要生成的图片...',
+    model: '模型',
     aspectRatio: '图片比例',
     imageCount: '生成数量',
     generateImage: '生成图片',
@@ -119,6 +123,7 @@ const translations: Record<Language, Translations> = {
     videoPromptPlaceholder: '描述你想要生成的视频...',
     resolution: '分辨率',
     duration: '时长',
+    videoModel: '视频模型',
     cameraMovement: '运镜',
     generateVideo: '生成视频',
     generatingVideo: '生成中...',
@@ -129,6 +134,7 @@ const translations: Record<Language, Translations> = {
     musicPrompt: '音乐描述',
     musicPromptPlaceholder: '描述你想要生成的音乐...',
     instrumental: '纯音乐（无人声）',
+    musicModel: '音乐模型',
     lyrics: '歌词',
     lyricsPlaceholder: '输入歌词（可选）...',
     generateMusic: '生成音乐',
@@ -173,6 +179,7 @@ const translations: Record<Language, Translations> = {
     // Image Gen
     imagePrompt: 'Image Description',
     imagePromptPlaceholder: 'Describe the image you want to generate...',
+    model: 'Model',
     aspectRatio: 'Aspect Ratio',
     imageCount: 'Image Count',
     generateImage: 'Generate Image',
@@ -186,6 +193,7 @@ const translations: Record<Language, Translations> = {
     videoPromptPlaceholder: 'Describe the video you want to generate...',
     resolution: 'Resolution',
     duration: 'Duration',
+    videoModel: 'Video Model',
     cameraMovement: 'Camera Movement',
     generateVideo: 'Generate Video',
     generatingVideo: 'Generating...',
@@ -196,6 +204,7 @@ const translations: Record<Language, Translations> = {
     musicPrompt: 'Music Description',
     musicPromptPlaceholder: 'Describe the music you want to generate...',
     instrumental: 'Instrumental (no vocals)',
+    musicModel: 'Music Model',
     lyrics: 'Lyrics',
     lyricsPlaceholder: 'Enter lyrics (optional)...',
     generateMusic: 'Generate Music',

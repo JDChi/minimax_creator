@@ -10,6 +10,7 @@ export default function MusicGenForm() {
   const [prompt, setPrompt] = useState('');
   const [lyrics, setLyrics] = useState('');
   const [isInstrumental, setIsInstrumental] = useState(false);
+  const [model, setModel] = useState<'music-2.5+' | 'music-2.5'>('music-2.5+');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<MusicGenResponse | null>(null);
   const [error, setError] = useState('');
@@ -27,7 +28,7 @@ export default function MusicGenForm() {
 
     try {
       const data = await generateMusic({
-        model: 'music-2.5+',
+        model,
         prompt,
         lyrics: isInstrumental ? undefined : lyrics,
         is_instrumental: isInstrumental,
@@ -92,6 +93,26 @@ export default function MusicGenForm() {
               {t.instrumental}
             </span>
           </label>
+        </div>
+
+        {/* Model */}
+        <div>
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+            <span className="flex items-center gap-1.5">
+              <svg className="w-4 h-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+              </svg>
+              {t.musicModel}
+            </span>
+          </label>
+          <select
+            value={model}
+            onChange={(e) => setModel(e.target.value as 'music-2.5+' | 'music-2.5')}
+            className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500 text-slate-800 dark:text-white text-sm cursor-pointer transition-all duration-200 input-focus"
+          >
+            <option value="music-2.5+">music-2.5+</option>
+            <option value="music-2.5">music-2.5</option>
+          </select>
         </div>
 
         {/* Lyrics Input */}

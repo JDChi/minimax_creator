@@ -10,6 +10,7 @@ export default function ImageGenForm() {
   const [prompt, setPrompt] = useState('');
   const [aspectRatio, setAspectRatio] = useState('1:1');
   const [n, setN] = useState(1);
+  const [model, setModel] = useState<'image-01' | 'image-01-live'>('image-01');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ImageGenResponse | null>(null);
   const [error, setError] = useState('');
@@ -27,7 +28,7 @@ export default function ImageGenForm() {
 
     try {
       const data = await generateImage({
-        model: 'image-01',
+        model,
         prompt,
         aspect_ratio: aspectRatio as '1:1' | '16:9' | '4:3' | '3:2' | '2:3' | '3:4' | '9:16' | '21:9',
         n,
@@ -77,6 +78,26 @@ export default function ImageGenForm() {
 
         {/* Options Row */}
         <div className="grid grid-cols-2 gap-4">
+          {/* Model */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                </svg>
+                {t.model}
+              </span>
+            </label>
+            <select
+              value={model}
+              onChange={(e) => setModel(e.target.value as 'image-01' | 'image-01-live')}
+              className="w-full px-4 py-3 bg-slate-50/50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 text-slate-800 dark:text-white text-sm cursor-pointer transition-all duration-200 input-focus"
+            >
+              <option value="image-01">image-01</option>
+              <option value="image-01-live">image-01-live</option>
+            </select>
+          </div>
+
           {/* Aspect Ratio */}
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">

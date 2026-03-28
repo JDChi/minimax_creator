@@ -29,7 +29,7 @@ export interface ImageGenResponse {
 
 // 文生视频
 export interface VideoGenParams {
-  model?: 'MiniMax-Hailuo-2.3' | 'MiniMax-Hailuo-02' | 'T2V-01-Director' | 'T2V-01';
+  model?: 'MiniMax-Hailuo-2.3' | 'MiniMax-Hailuo-2.3-Fast' | 'MiniMax-Hailuo-02';
   prompt: string;
   prompt_optimizer?: boolean;
   fast_pretreatment?: boolean;
