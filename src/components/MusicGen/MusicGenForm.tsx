@@ -89,7 +89,7 @@ export default function MusicGenForm() {
               <div className="w-11 h-6 bg-slate-200 dark:bg-zinc-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-pink-500/50 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-pink-500 peer-checked:to-amber-500 transition-all duration-200"></div>
             </div>
             <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors">
-              {t.musicType}
+              {t.instrumental}
             </span>
           </label>
         </div>

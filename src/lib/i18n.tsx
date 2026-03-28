@@ -59,7 +59,7 @@ interface Translations {
   // Music Gen
   musicPrompt: string;
   musicPromptPlaceholder: string;
-  musicType: string;
+  instrumental: string;
   lyrics: string;
   lyricsPlaceholder: string;
   generateMusic: string;
@@ -84,7 +84,7 @@ const translations: Record<Language, Translations> = {
     textToVideo: '文生视频',
     textToMusic: '生音乐',
     // Footer
-    poweredBy: 'Powered by MiniMax AI',
+    poweredBy: 'Powered by MiniMax API',
     // Settings page
     apiConfig: 'API 配置',
     appearance: '外观',
@@ -128,7 +128,7 @@ const translations: Record<Language, Translations> = {
     // Music Gen
     musicPrompt: '音乐描述',
     musicPromptPlaceholder: '描述你想要生成的音乐...',
-    musicType: '音乐类型',
+    instrumental: '纯音乐（无人声）',
     lyrics: '歌词',
     lyricsPlaceholder: '输入歌词（可选）...',
     generateMusic: '生成音乐',
@@ -151,7 +151,7 @@ const translations: Record<Language, Translations> = {
     textToVideo: 'Text to Video',
     textToMusic: 'Text to Music',
     // Footer
-    poweredBy: 'Powered by MiniMax AI',
+    poweredBy: 'Powered by MiniMax API',
     // Settings page
     apiConfig: 'API Configuration',
     appearance: 'Appearance',
@@ -195,7 +195,7 @@ const translations: Record<Language, Translations> = {
     // Music Gen
     musicPrompt: 'Music Description',
     musicPromptPlaceholder: 'Describe the music you want to generate...',
-    musicType: 'Music Type',
+    instrumental: 'Instrumental (no vocals)',
     lyrics: 'Lyrics',
     lyricsPlaceholder: 'Enter lyrics (optional)...',
     generateMusic: 'Generate Music',
