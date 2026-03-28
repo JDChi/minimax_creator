@@ -95,8 +95,6 @@ interface Translations {
   speechEmotionNeutral: string;
   speechEmotionHint: string;
   speechOutputFormat: string;
-  speechSubtitle: string;
-  speechSubtitleHint: string;
   generateSpeech: string;
   // Common
   error: string;
@@ -196,8 +194,6 @@ const translations: Record<Language, Translations> = {
     speechEmotionNeutral: '中性',
     speechEmotionHint: '仅 speech-2.8-hd/turbo 支持语气词标签如(laughs)',
     speechOutputFormat: '输出格式',
-    speechSubtitle: '启用字幕',
-    speechSubtitleHint: '仅部分模型支持',
     generateSpeech: '生成语音',
     // Common
     error: '错误',
@@ -295,8 +291,6 @@ const translations: Record<Language, Translations> = {
     speechEmotionNeutral: 'Neutral',
     speechEmotionHint: 'Only speech-2.8-hd/turbo support emotion tags like (laughs)',
     speechOutputFormat: 'Format',
-    speechSubtitle: 'Enable Subtitle',
-    speechSubtitleHint: 'Only supported by some models',
     generateSpeech: 'Generate Speech',
     // Common
     error: 'Error',
