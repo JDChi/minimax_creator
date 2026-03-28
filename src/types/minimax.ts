@@ -93,3 +93,46 @@ export interface MusicGenResponse {
     status_msg: string;
   };
 }
+
+// 语音合成
+export interface SpeechGenParams {
+  model: 'speech-2.8-hd' | 'speech-2.8-turbo' | 'speech-2.6-hd' | 'speech-2.6-turbo' | 'speech-02-hd' | 'speech-02-turbo' | 'speech-01-hd' | 'speech-01-turbo';
+  text: string;
+  voice_setting: {
+    voice_id: string;
+    speed?: number;
+    vol?: number;
+    pitch?: number;
+    emotion?: 'happy' | 'sad' | 'angry' | 'fearful' | 'disgusted' | 'surprised' | 'neutral';
+  };
+  audio_setting?: {
+    sample_rate?: number;
+    bitrate?: number;
+    format?: 'mp3' | 'pcm' | 'flac' | 'wav';
+    channel?: 1 | 2;
+  };
+  output_format?: 'url' | 'hex';
+}
+
+export interface SpeechGenResponse {
+  data: {
+    audio: string;
+    subtitle_file?: string;
+    status: number;
+    trace_id: string;
+    extra_info?: {
+      audio_length: number;
+      audio_sample_rate: number;
+      audio_size: number;
+      bitrate: number;
+      audio_format: string;
+      audio_channel: number;
+      usage_characters: number;
+      word_count: number;
+    };
+  };
+  base_resp: {
+    status_code: number;
+    status_msg: string;
+  };
+}

@@ -10,10 +10,16 @@ interface Translations {
   subtitle: string;
   settings: string;
   github: string;
+  // Tab navigation
+  tabImage: string;
+  tabVideo: string;
+  tabMusic: string;
+  tabSpeech: string;
   // Generation types
   textToImage: string;
   textToVideo: string;
   textToMusic: string;
+  textToSpeech: string;
   // Footer
   poweredBy: string;
   // Settings page
@@ -70,6 +76,17 @@ interface Translations {
   generatingMusic: string;
   musicUrl: string;
   downloadMusic: string;
+  // Speech Gen
+  speechPrompt: string;
+  speechPromptPlaceholder: string;
+  speechModel: string;
+  voiceId: string;
+  speechSpeed: string;
+  speechVolume: string;
+  speechPitch: string;
+  speechEmotion: string;
+  speechOutputFormat: string;
+  generateSpeech: string;
   // Common
   error: string;
   noApiKey: string;
@@ -83,10 +100,16 @@ const translations: Record<Language, Translations> = {
     subtitle: 'AI Generation Platform',
     settings: '设置',
     github: 'GitHub',
+    // Tab navigation
+    tabImage: '图像',
+    tabVideo: '视频',
+    tabMusic: '音乐',
+    tabSpeech: '语音',
     // Generation types
     textToImage: '文生图',
     textToVideo: '文生视频',
     textToMusic: '生音乐',
+    textToSpeech: '语音合成',
     // Footer
     poweredBy: 'Powered by MiniMax API',
     // Settings page
@@ -143,6 +166,17 @@ const translations: Record<Language, Translations> = {
     generatingMusic: '生成中...',
     musicUrl: '音乐链接',
     downloadMusic: '下载音乐',
+    // Speech Gen
+    speechPrompt: '文本内容',
+    speechPromptPlaceholder: '输入要转换为语音的文本...',
+    speechModel: '模型',
+    voiceId: '音色',
+    speechSpeed: '语速',
+    speechVolume: '音量',
+    speechPitch: '音调',
+    speechEmotion: '情绪',
+    speechOutputFormat: '输出格式',
+    generateSpeech: '生成语音',
     // Common
     error: '错误',
     noApiKey: '请先在设置页面配置 API Key',
@@ -154,10 +188,16 @@ const translations: Record<Language, Translations> = {
     subtitle: 'AI Generation Platform',
     settings: 'Settings',
     github: 'GitHub',
+    // Tab navigation
+    tabImage: 'Image',
+    tabVideo: 'Video',
+    tabMusic: 'Music',
+    tabSpeech: 'Speech',
     // Generation types
     textToImage: 'Text to Image',
     textToVideo: 'Text to Video',
     textToMusic: 'Text to Music',
+    textToSpeech: 'Text to Speech',
     // Footer
     poweredBy: 'Powered by MiniMax API',
     // Settings page
@@ -214,6 +254,17 @@ const translations: Record<Language, Translations> = {
     generatingMusic: 'Generating...',
     musicUrl: 'Music URL',
     downloadMusic: 'Download Music',
+    // Speech Gen
+    speechPrompt: 'Text',
+    speechPromptPlaceholder: 'Enter text to convert to speech...',
+    speechModel: 'Model',
+    voiceId: 'Voice',
+    speechSpeed: 'Speed',
+    speechVolume: 'Volume',
+    speechPitch: 'Pitch',
+    speechEmotion: 'Emotion',
+    speechOutputFormat: 'Format',
+    generateSpeech: 'Generate Speech',
     // Common
     error: 'Error',
     noApiKey: 'Please configure API Key in Settings page first',

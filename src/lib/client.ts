@@ -1,4 +1,4 @@
-import { ImageGenParams, VideoGenParams, MusicGenParams } from '@/types/minimax';
+import { ImageGenParams, VideoGenParams, MusicGenParams, SpeechGenParams } from '@/types/minimax';
 
 function getConfig() {
   if (typeof window === 'undefined') {
@@ -66,4 +66,9 @@ export async function generateVideo(params: VideoGenParams, signal?: AbortSignal
 // 生音乐
 export async function generateMusic(params: MusicGenParams, signal?: AbortSignal) {
   return apiPost('/api/minimax/music', params, signal);
+}
+
+// 语音合成
+export async function generateSpeech(params: SpeechGenParams, signal?: AbortSignal) {
+  return apiPost('/api/minimax/speech', params, signal);
 }
