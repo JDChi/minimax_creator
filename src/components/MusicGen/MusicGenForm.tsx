@@ -22,16 +22,26 @@ export default function MusicGenForm() {
       return;
     }
 
+    // music-2.5 歌词必填
+    if (model === 'music-2.5' && !isInstrumental && !lyrics.trim()) {
+      setError(t.musicLyricsRequired);
+      return;
+    }
+
     setLoading(true);
     setError('');
     setResult(null);
 
     try {
+      // music-2.5+ 支持自动生成歌词，music-2.5 歌词必填
+      const needsLyricsOptimizer = model === 'music-2.5+' && !isInstrumental && !lyrics.trim();
+
       const data = await generateMusic({
         model,
         prompt,
         lyrics: isInstrumental ? undefined : lyrics,
         is_instrumental: isInstrumental,
+        lyrics_optimizer: needsLyricsOptimizer ? true : undefined,
         output_format: 'url',
       });
       setResult(data as MusicGenResponse);

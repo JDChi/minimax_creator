@@ -63,6 +63,7 @@ interface Translations {
   musicPromptPlaceholder: string;
   instrumental: string;
   musicModel: string;
+  musicLyricsRequired: string;
   lyrics: string;
   lyricsPlaceholder: string;
   generateMusic: string;
@@ -135,6 +136,7 @@ const translations: Record<Language, Translations> = {
     musicPromptPlaceholder: '描述你想要生成的音乐...',
     instrumental: '纯音乐（无人声）',
     musicModel: '音乐模型',
+    musicLyricsRequired: 'music-2.5 模型需要填写歌词',
     lyrics: '歌词',
     lyricsPlaceholder: '输入歌词（可选）...',
     generateMusic: '生成音乐',
@@ -205,6 +207,7 @@ const translations: Record<Language, Translations> = {
     musicPromptPlaceholder: 'Describe the music you want to generate...',
     instrumental: 'Instrumental (no vocals)',
     musicModel: 'Music Model',
+    musicLyricsRequired: 'music-2.5 model requires lyrics',
     lyrics: 'Lyrics',
     lyricsPlaceholder: 'Enter lyrics (optional)...',
     generateMusic: 'Generate Music',
